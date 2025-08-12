@@ -1,0 +1,143 @@
+---
+const skills = [
+  'JavaScript',
+  'TypeScript',
+  'React',
+  'Vue.js',
+  'Node.js',
+  'Python',
+  'PostgreSQL',
+  'MongoDB',
+  'Docker',
+  'AWS',
+  'Git',
+  'Figma'
+];
+---
+
+<section id="about" class="py-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4 fade-in-section">
+        Acerca de <span class="gradient-text">mí</span>
+      </h2>
+      <div class="w-20 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto fade-in-section"></div>
+    </div>
+    
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <!-- Text Content -->
+      <div class="space-y-6 fade-in-section">
+        <p class="text-lg text-slate-300 leading-relaxed">
+          Soy un desarrollador full stack apasionado por crear soluciones digitales 
+          innovadoras que combinan funcionalidad excepcional con diseño elegante. 
+          Mi enfoque se centra en escribir código limpio, escalable y mantenible.
+        </p>
+        
+        <p class="text-lg text-slate-300 leading-relaxed">
+          Con <span class="text-blue-400 font-semibold">+3 años de experiencia</span>, 
+          he trabajado en proyectos que van desde aplicaciones web complejas hasta 
+          sistemas de microservicios, siempre priorizando la experiencia del usuario 
+          y las mejores prácticas de desarrollo.
+        </p>
+        
+        <p class="text-lg text-slate-300 leading-relaxed">
+          Cuando no estoy programando, disfruto explorando nuevas tecnologías, 
+          contribuyendo a proyectos open source y compartiendo conocimiento con 
+          la comunidad de desarrolladores.
+        </p>
+        
+        <div class="pt-4">
+          <a
+            href="/cv.pdf"
+            target="_blank"
+            class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 hover-lift focus-ring"
+          >
+            <span>Descargar CV</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Image/Visual Element -->
+      <div class="fade-in-section">
+        <div class="relative">
+          <!-- Background decoration -->
+          <div class="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-2xl transform rotate-3"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-2xl transform -rotate-3"></div>
+          
+          <!-- Main content card -->
+          <div class="relative bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-8">
+            <div class="space-y-6">
+              <div class="text-center">
+                <div class="w-24 h-24 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <span class="text-2xl font-bold text-white">TN</span>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Desarrollador Full Stack</h3>
+                <p class="text-slate-400">Especializado en tecnologías modernas</p>
+              </div>
+              
+              <!-- Quick stats -->
+              <div class="grid grid-cols-3 gap-4 text-center">
+                <div>
+                  <div class="text-2xl font-bold text-blue-400">50+</div>
+                  <div class="text-sm text-slate-400">Proyectos</div>
+                </div>
+                <div>
+                  <div class="text-2xl font-bold text-purple-400">3+</div>
+                  <div class="text-sm text-slate-400">Años exp.</div>
+                </div>
+                <div>
+                  <div class="text-2xl font-bold text-pink-400">24/7</div>
+                  <div class="text-sm text-slate-400">Disponible</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Skills Section -->
+    <div class="mt-20 fade-in-section">
+      <h3 class="text-2xl font-bold text-center mb-12">
+        Tecnologías que <span class="gradient-text">manejo</span>
+      </h3>
+      
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {skills.map((skill, index) => (
+          <div 
+            class="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-lg p-4 text-center hover:border-blue-400/50 hover:bg-slate-700/50 transition-all duration-200 hover-lift group"
+            style={`animation-delay: ${index * 0.1}s`}
+          >
+            <span class="text-slate-300 group-hover:text-blue-400 transition-colors duration-200 font-medium">
+              {skill}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Intersection Observer for animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, observerOptions);
+
+    const sections = document.querySelectorAll('.fade-in-section');
+    sections.forEach(section => observer.observe(section));
+  });
+</script>
