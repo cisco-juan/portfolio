@@ -1,5 +1,6 @@
 ---
 const navItems = [
+  { href: '#hero', label: 'Inicio' },
   { href: '#about', label: 'Acerca de' },
   { href: '#experience', label: 'Experiencia' },
   { href: '#projects', label: 'Proyectos' },
@@ -77,33 +78,101 @@ const navItems = [
       });
     }
     
-    // Highlight active section
-    const sections = document.querySelectorAll('section[id]');
+    // Enhanced smooth scrolling with section transitions
     const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    const sections = document.querySelectorAll('section[id]');
+    let currentSectionIndex = 0;
+    let isTransitioning = false;
     
+    // Create section mapping
+    const sectionMap = Array.from(sections).map(section => ({
+      id: section.id,
+      element: section
+    }));
+    
+    // Handle navigation clicks
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (isTransitioning) return;
+        
+        const targetId = link.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        const targetIndex = sectionMap.findIndex(section => section.id === targetId);
+        
+        if (targetSection && targetIndex !== -1 && targetIndex !== currentSectionIndex) {
+          isTransitioning = true;
+          transitionToSection(targetSection, targetIndex);
+        }
+      });
+    });
+    
+    // Section transition function
+    function transitionToSection(targetSection, targetIndex) {
+      const currentSection = sectionMap[currentSectionIndex].element;
+      
+      // Add transition classes
+      targetSection.classList.add('section-slide-up-enter');
+      targetSection.style.zIndex = '20';
+      
+      // Scroll to target section smoothly
+      targetSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+      
+      // Update navigation highlighting immediately
+      updateActiveNavLink(targetSection.id);
+      
+      // Clean up after animation
+      setTimeout(() => {
+        targetSection.classList.remove('section-slide-up-enter');
+        targetSection.style.zIndex = '';
+        currentSectionIndex = targetIndex;
+        isTransitioning = false;
+      }, 800);
+    }
+    
+    // Update active navigation link
+    function updateActiveNavLink(sectionId) {
+      navLinks.forEach(link => {
+        link.classList.remove('text-blue-400');
+        link.classList.add('text-slate-300');
+        
+        if (link.getAttribute('href') === `#${sectionId}`) {
+          link.classList.remove('text-slate-300');
+          link.classList.add('text-blue-400');
+        }
+      });
+    }
+    
+    // Intersection Observer for scroll-based highlighting
     const observerOptions = {
       threshold: 0.3,
       rootMargin: '-100px 0px -200px 0px'
     };
     
     const observer = new IntersectionObserver((entries) => {
+      if (isTransitioning) return;
+      
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const sectionId = entry.target.getAttribute('id');
+          const sectionIndex = sectionMap.findIndex(section => section.id === sectionId);
           
-          navLinks.forEach(link => {
-            link.classList.remove('text-blue-400');
-            link.classList.add('text-slate-300');
-            
-            if (link.getAttribute('href') === `#${sectionId}`) {
-              link.classList.remove('text-slate-300');
-              link.classList.add('text-blue-400');
-            }
-          });
+          if (sectionIndex !== -1) {
+            currentSectionIndex = sectionIndex;
+            updateActiveNavLink(sectionId);
+          }
         }
       });
     }, observerOptions);
     
     sections.forEach(section => observer.observe(section));
+    
+    // Initialize first section as active
+    if (sections.length > 0) {
+      updateActiveNavLink(sections[0].id);
+    }
   });
 </script>
