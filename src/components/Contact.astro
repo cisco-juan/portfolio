@@ -244,12 +244,12 @@ const socialLinks = [
     sections.forEach(section => observer.observe(section));
 
     // Contact form handling
-    const form = document.getElementById('contact-form');
-    const submitBtn = document.getElementById('submit-btn');
-    const btnText = document.getElementById('btn-text');
-    const btnLoading = document.getElementById('btn-loading');
-    const formMessage = document.getElementById('form-message');
-    const messageText = document.getElementById('message-text');
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+    const btnText = document.getElementById('btn-text') as HTMLSpanElement;
+    const btnLoading = document.getElementById('btn-loading') as HTMLSpanElement;
+    const formMessage = document.getElementById('form-message') as HTMLDivElement;
+    const messageText = document.getElementById('message-text') as HTMLParagraphElement;
 
     if (form) {
       form.addEventListener('submit', async (e) => {

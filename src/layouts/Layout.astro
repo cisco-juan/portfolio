@@ -4,7 +4,7 @@ export interface Props {
   description?: string;
 }
 
-const { title, description = "Portfolio personal - Desarrollador Full Stack" } = Astro.props;
+const { title, description = "Cisco - Desarrollador Full Stack" } = Astro.props;
 ---
 
 <!doctype html>
@@ -65,7 +65,7 @@ const { title, description = "Portfolio personal - Desarrollador Full Stack" } =
         links.forEach(link => {
           link.addEventListener('click', (e) => {
             e.preventDefault();
-            const target = document.querySelector(link.getAttribute('href'));
+            const target = document.querySelector(link.getAttribute('href') || '');
             if (target) {
               target.scrollIntoView({
                 behavior: 'smooth',
