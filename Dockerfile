@@ -1,3 +1,6 @@
+# Forzar rebuild
+ENV REBUILD_CACHE=v3
+
 # Multi-stage build for Astro portfolio project
 FROM node:22-alpine AS base
 WORKDIR /app
@@ -22,7 +25,7 @@ FROM nginx:alpine AS runner
 RUN rm /etc/nginx/conf.d/default.conf
 COPY <<EOF /etc/nginx/conf.d/default.conf
 server {
-    listen 4321;
+    listen 80;
     server_name localhost;
     root /usr/share/nginx/html;
     index index.html;
