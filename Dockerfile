@@ -1,9 +1,8 @@
-# Forzar rebuild
-ENV REBUILD_CACHE=v3
-
 # Multi-stage build for Astro portfolio project
 FROM node:22-alpine AS base
 WORKDIR /app
+# Forzar rebuild
+ENV REBUILD_CACHE=v3
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -25,7 +24,7 @@ FROM nginx:alpine AS runner
 RUN rm /etc/nginx/conf.d/default.conf
 COPY <<EOF /etc/nginx/conf.d/default.conf
 server {
-    listen 80;
+    listen 4321;
     server_name localhost;
     root /usr/share/nginx/html;
     index index.html;
@@ -60,8 +59,8 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 # Make sure we have an index.html
 RUN ls -la /usr/share/nginx/html/
 
-# Expose port 80
-EXPOSE 80
+# Expose port 4321
+EXPOSE 4321
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
