@@ -4,10 +4,9 @@ WORKDIR /app
 
 # Install dependencies only when needed
 FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 COPY package.json package-lock.json ./
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci --only=production --legacy-peer-deps && npm cache clean --force
 
 # Build the app
 FROM base AS builder
@@ -16,18 +15,53 @@ RUN npm ci --legacy-peer-deps
 COPY . .
 RUN npm run build
 
-# Production image, copy all the files and run astro
+# Production image
 FROM nginx:alpine AS runner
 
-# Copy the built application from builder stage
+# Create nginx configuration for Astro SPA
+RUN rm /etc/nginx/conf.d/default.conf
+COPY <<EOF /etc/nginx/conf.d/default.conf
+server {
+    listen 4321;
+    server_name localhost;
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # Handle client-side routing
+    location / {
+        try_files \$uri \$uri/ /index.html;
+    }
+
+    # Security headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+
+    # Cache static assets
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # Gzip compression
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_types text/plain text/css text/xml text/javascript application/javascript application/xml+rss application/json;
+}
+EOF
+
+# Copy the built application
 COPY --from=builder /app/dist /usr/share/nginx/html
 
+# Make sure we have an index.html
+RUN ls -la /usr/share/nginx/html/
 
 # Expose port 80
 EXPOSE 80
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1
+  CMD wget --no-verbose --tries=1 --spider http://localhost:4321/ || exit 1
 
 CMD ["nginx", "-g", "daemon off;"]
