@@ -1,8 +1,6 @@
 # Multi-stage build for Astro portfolio project
 FROM node:22-alpine AS base
 WORKDIR /app
-# Forzar rebuild
-ENV REBUILD_CACHE=v3
 
 # Install dependencies only when needed
 FROM base AS deps
