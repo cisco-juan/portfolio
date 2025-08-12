@@ -22,8 +22,6 @@ FROM nginx:alpine AS runner
 # Copy the built application from builder stage
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Create a custom nginx configuration for SPA routing (if needed)
-COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
