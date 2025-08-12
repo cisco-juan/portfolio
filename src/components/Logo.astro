@@ -1,0 +1,85 @@
+---
+const { width = 400, height = 120, fontSize = 42 } = Astro.props;
+
+---
+
+<svg width={width} height={height} viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      
+      <!-- Sombra para el texto -->
+      <filter id="textShadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.3"/>
+      </filter>
+      
+      <!-- Resplandor para los brackets -->
+      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+        <feMerge> 
+          <feMergeNode in="coloredBlur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+    
+    <!-- Fondo con patrón tech sutil -->
+    <rect width="400" height="120" fill="transparent"/>
+    
+    <!-- Patrón de puntos tech de fondo -->
+    <g opacity="0.1">
+      <circle cx="50" cy="30" r="1" fill="#00f5ff"/>
+      <circle cx="350" cy="90" r="1" fill="#8000ff"/>
+      <circle cx="100" cy="80" r="1" fill="#00f5ff"/>
+      <circle cx="300" cy="40" r="1" fill="#8000ff"/>
+    </g>
+    
+    <!-- Bracket de apertura < -->
+    <text x="45" y="70" 
+          font-family="'Courier New', Monaco, 'Lucida Console', monospace" 
+          font-size="48" 
+          font-weight="600" 
+          fill="#00f5ff"
+          filter="url(#glow)">&lt;</text>
+    
+    <!-- Texto principal "Ci5co" -->
+    <text x="80" y="70" 
+          font-family="'Courier New', Monaco, 'Lucida Console', monospace" 
+          font-size={fontSize} 
+          font-weight="600" 
+          fill="#ffffff"
+          filter="url(#textShadow)"
+          letter-spacing="-1px">Cisco</text>
+    
+    <!-- Bracket de cierre /> -->
+    <text x="220" y="70" 
+          font-family="'Courier New', Monaco, 'Lucida Console', monospace" 
+          font-size="48" 
+          font-weight="600" 
+          fill="#00f5ff"
+          filter="url(#glow)">&#47;&gt;</text>
+    
+
+    <!-- Animaciones -->
+    <style>
+      <![CDATA[
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.7; }
+        }
+        
+        @keyframes glow-pulse {
+          0%, 100% { filter: url(#glow); }
+          50% { filter: url(#glow) brightness(1.2); }
+        }
+        
+        svg text:first-of-type,
+        svg text:last-of-type {
+          animation: glow-pulse 2s ease-in-out infinite;
+        }
+        
+        svg:hover text:first-of-type,
+        svg:hover text:last-of-type {
+          animation: pulse 0.8s ease-in-out infinite;
+        }
+      ]]>
+    </style>
+  </svg>

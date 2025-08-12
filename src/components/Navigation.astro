@@ -1,4 +1,6 @@
 ---
+import Logo from "./Logo.astro";
+
 const navItems = [
   { href: '#hero', label: 'Inicio' },
   { href: '#about', label: 'Acerca de' },
@@ -14,9 +16,9 @@ const navItems = [
       <!-- Logo -->
       <a 
         href="#" 
-        class="text-xl font-bold gradient-text hover:scale-105 transition-transform duration-200"
+        class="text-xl font-bold gradient-text transition-transform duration-200"
       >
-        Portfolio
+        <Logo width={200} height={60} fontSize={42} />
       </a>
       
       <!-- Desktop Navigation -->
@@ -96,7 +98,9 @@ const navItems = [
         e.preventDefault();
         if (isTransitioning) return;
         
-        const targetId = link.getAttribute('href').substring(1);
+        const targetId = link.getAttribute('href')?.substring(1);
+        if (!targetId) return;
+        
         const targetSection = document.getElementById(targetId);
         const targetIndex = sectionMap.findIndex(section => section.id === targetId);
         
@@ -106,9 +110,9 @@ const navItems = [
         }
       });
     });
-    
+
     // Section transition function
-    function transitionToSection(targetSection, targetIndex) {
+    function transitionToSection(targetSection: HTMLElement, targetIndex: number) {
       const currentSection = sectionMap[currentSectionIndex].element;
       
       // Add transition classes
@@ -134,7 +138,7 @@ const navItems = [
     }
     
     // Update active navigation link
-    function updateActiveNavLink(sectionId) {
+    function updateActiveNavLink(sectionId: string) {
       navLinks.forEach(link => {
         link.classList.remove('text-blue-400');
         link.classList.add('text-slate-300');
@@ -162,7 +166,9 @@ const navItems = [
           
           if (sectionIndex !== -1) {
             currentSectionIndex = sectionIndex;
-            updateActiveNavLink(sectionId);
+            if (sectionId) {
+              updateActiveNavLink(sectionId);
+            }
           }
         }
       });
