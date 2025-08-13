@@ -1,0 +1,44 @@
+services:
+  ci5co-portfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ci5co-portfolio
+    ports:
+      - "4321:4321"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:4321/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - portfolio-network
+
+  # Optional: Add a reverse proxy (uncomment if needed)
+  # nginx-proxy:
+  #   image: nginx:alpine
+  #   container_name: nginx-proxy
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf:ro
+  #     - ./ssl:/etc/ssl:ro
+  #   depends_on:
+  #     - ci5co-portfolio
+  #   networks:
+  #     - portfolio-network
+
+networks:
+  portfolio-network:
+    driver: bridge
+    name: portfolio-network
+
+volumes:
+  # Add any persistent volumes if needed in the future
+  portfolio-data:
+    driver: local

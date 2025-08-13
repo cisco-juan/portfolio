@@ -4,7 +4,8 @@
       "WebFetch(domain:brittanychiang.com)",
       "Bash(npm install:*)",
       "Bash(npx astro add tailwind:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(docker-compose:*)"
     ],
     "deny": [],
     "ask": []
