@@ -1,4 +1,4 @@
-# Multi-stage build for Astro portfolio project
+# Multi-stage build for Astro portfolio project with Node adapter
 FROM node:22-alpine AS base
 WORKDIR /app
 
@@ -16,59 +16,37 @@ COPY . .
 RUN npm run build
 
 # Production image
-FROM nginx:alpine AS runner
+FROM node:22-alpine AS runner
 
-# Create nginx configuration for Astro SPA
-RUN rm /etc/nginx/conf.d/default.conf
-COPY <<EOF /etc/nginx/conf.d/default.conf
-server {
-    listen 4321;
-    server_name localhost;
-    root /usr/share/nginx/html;
-    index index.html;
-    
-    # Enable logging for debugging
-    access_log /var/log/nginx/access.log;
-    error_log /var/log/nginx/error.log debug;
-
-    # Handle static assets first
-    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|webp)$ {
-        root /usr/share/nginx/html;
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-        add_header Access-Control-Allow-Origin "*";
-        try_files \$uri =404;
-    }
-
-    # Handle client-side routing
-    location / {
-        try_files \$uri \$uri/ /index.html;
-    }
-
-    # Security headers
-    add_header X-Frame-Options "SAMEORIGIN" always;
-    add_header X-Content-Type-Options "nosniff" always;
-    add_header X-XSS-Protection "1; mode=block" always;
-
-    # Gzip compression
-    gzip on;
-    gzip_vary on;
-    gzip_min_length 1024;
-    gzip_types text/plain text/css text/xml text/javascript application/javascript application/xml+rss application/json;
-}
-EOF
+# Create a non-root user
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 astro
 
 # Copy the built application
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist /app/dist
+COPY --from=builder /app/package.json /app/package.json
+COPY --from=builder /app/package-lock.json /app/package-lock.json
 
-# Make sure we have an index.html
-RUN ls -la /usr/share/nginx/html/
+# Install only production dependencies
+RUN npm ci --only=production --legacy-peer-deps && npm cache clean --force
+
+# Change ownership to the astro user
+RUN chown -R astro:nodejs /app
+
+# Switch to the astro user
+USER astro
 
 # Expose port 4321
 EXPOSE 4321
+
+# Set environment variables
+ENV NODE_ENV=production
+ENV HOST=0.0.0.0
+ENV PORT=4321
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:4321/ || exit 1
 
-CMD ["nginx", "-g", "daemon off;"]
+# Start the application
+CMD ["node", "dist/server/entry.mjs"]
