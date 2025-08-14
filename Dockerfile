@@ -26,6 +26,19 @@ server {
     server_name localhost;
     root /usr/share/nginx/html;
     index index.html;
+    
+    # Enable logging for debugging
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log debug;
+
+    # Handle static assets first
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|webp)$ {
+        root /usr/share/nginx/html;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        add_header Access-Control-Allow-Origin "*";
+        try_files \$uri =404;
+    }
 
     # Handle client-side routing
     location / {
@@ -36,12 +49,6 @@ server {
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-XSS-Protection "1; mode=block" always;
-
-    # Cache static assets
-    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ {
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-    }
 
     # Gzip compression
     gzip on;
