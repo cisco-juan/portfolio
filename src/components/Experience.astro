@@ -3,6 +3,7 @@ const experiences = [
   {
     id: 1,
     company: "Blackode",
+    link: "https://www.blackode.com/",
     position: "Engineering Manager",
     period: "nov. 2024 - actualidad",
     duration: "10 meses",
@@ -21,6 +22,7 @@ const experiences = [
   {
     id: 2,
     company: "Blackode",
+    link: "https://www.blackode.com/",
     position: "Project Lead Developer",
     period: "jun. 2024 - nov. 2024",
     duration: "6 meses",
@@ -39,6 +41,7 @@ const experiences = [
   {
     id: 3,
     company: "CODIKA",
+    link: "https://codika.net/",
     position: "Ingeniero de software",
     period: "abr. 2022 - jun. 2024",
     duration: "2 años 3 meses",
@@ -57,6 +60,7 @@ const experiences = [
   {
     id: 4,
     company: "Confisa RD",
+    link: "https://www.confisa.do/",
     position: "Desarrollador de software .NET",
     period: "jun. 2021 - abr. 2022",
     duration: "11 meses",
@@ -75,6 +79,7 @@ const experiences = [
   {
     id: 5,
     company: "ARS YUNEN",
+    link: "https://www.arsyunen.com/",
     position: "Desarrollador Web",
     period: "oct. 2020 - jun. 2021",
     duration: "9 meses",
@@ -139,7 +144,11 @@ const experiences = [
                     </a>
                   )}
                 </div>
-                <h4 class="text-lg font-medium text-blue-400 mb-2">{exp.company}</h4>
+                <h4 class="text-lg font-medium text-blue-400 mb-2">
+                  <a href={exp.link} target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-500 transition-colors duration-200">
+                    {exp.company}
+                  </a>
+                </h4>
                 <div class="flex flex-wrap gap-4 text-sm text-slate-400">
                   <div class="flex items-center gap-1">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
