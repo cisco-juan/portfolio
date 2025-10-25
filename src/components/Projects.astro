@@ -64,7 +64,7 @@ const otherProjects = projects.filter(project => !project.featured);
       <h3 class="text-2xl font-bold mb-8 fade-in-section">Proyectos destacados</h3>
       <div class="space-y-16">
         {featuredProjects.map((project, index) => (
-          <div class={`fade-in-section grid lg:grid-cols-2 gap-8 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
+          <div class={`fade-in-section grid lg:grid-cols-2 gap-8 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense slide-in-from-right' : 'slide-in-from-left'}`}>
             <!-- Project Image -->
             <div class={`relative group ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
               <div class="relative overflow-hidden rounded-xl">
@@ -275,7 +275,7 @@ const otherProjects = projects.filter(project => !project.featured);
       });
     }, observerOptions);
 
-    const sections = document.querySelectorAll('.fade-in-section');
+    const sections = document.querySelectorAll('.fade-in-section, .slide-in-from-left, .slide-in-from-right');
     sections.forEach(section => observer.observe(section));
   });
 </script>

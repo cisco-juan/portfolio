@@ -3,156 +3,353 @@
 @tailwind utilities;
 
 /* Custom animations */
+
 @keyframes fadeInUp {
+
   from {
+
     opacity: 0;
+
     transform: translateY(30px);
+
   }
+
   to {
+
     opacity: 1;
+
     transform: translateY(0);
+
   }
+
 }
+
+
 
 @keyframes fadeIn {
+
   from {
+
     opacity: 0;
+
   }
+
   to {
+
     opacity: 1;
+
   }
+
 }
+
+
 
 @keyframes slideInLeft {
+
   from {
+
     opacity: 0;
+
     transform: translateX(-30px);
+
   }
+
   to {
+
     opacity: 1;
+
     transform: translateX(0);
+
   }
+
 }
+
+
 
 @keyframes pulse {
+
   0%, 100% {
+
     opacity: 1;
+
   }
+
   50% {
+
     opacity: 0.5;
+
   }
+
 }
+
+
 
 @keyframes slideUpEnter {
+
   from {
+
     opacity: 0;
+
     transform: translateY(100vh);
+
   }
+
   to {
+
     opacity: 1;
+
     transform: translateY(0);
+
   }
+
 }
+
+
 
 @keyframes slideUpExit {
+
   from {
+
     opacity: 1;
+
     transform: translateY(0);
+
   }
+
   to {
+
     opacity: 0;
+
     transform: translateY(-100vh);
+
   }
+
 }
+
+
 
 /* Animation classes */
+
 .animate-fade-in-up {
+
   animation: fadeInUp 0.6s ease-out forwards;
+
 }
+
+
 
 .animate-fade-in {
+
   animation: fadeIn 0.6s ease-out forwards;
+
 }
+
+
 
 .animate-slide-in-left {
+
   animation: slideInLeft 0.6s ease-out forwards;
+
 }
+
+
 
 .animate-pulse-slow {
+
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
 }
+
+
 
 /* Intersection Observer animations */
+
 .fade-in-section {
+
   opacity: 0;
+
   transform: translateY(20px);
+
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+
 }
+
+
 
 .fade-in-section.is-visible {
+
   opacity: 1;
+
   transform: translateY(0);
+
 }
+
+
+
+.slide-in-from-left {
+
+  opacity: 0;
+
+  transform: translateX(-100%);
+
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+
+}
+
+
+
+.slide-in-from-left.is-visible {
+
+  opacity: 1;
+
+  transform: translateX(0);
+
+}
+
+
+
+.slide-in-from-right {
+
+  opacity: 0;
+
+  transform: translateX(100%);
+
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+
+}
+
+
+
+.slide-in-from-right.is-visible {
+
+  opacity: 1;
+
+  transform: translateX(0);
+
+}
+
+
 
 /* Hover effects */
+
 .hover-lift {
+
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+
 }
+
+
 
 .hover-lift:hover {
+
   transform: translateY(-2px);
+
 }
+
+
 
 /* Gradient text */
+
 .gradient-text {
+
   background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+
   -webkit-background-clip: text;
+
   -webkit-text-fill-color: transparent;
+
   background-clip: text;
+
 }
+
+
 
 /* Custom focus styles */
+
 .focus-ring {
+
   transition: box-shadow 0.2s ease;
+
 }
+
+
 
 .focus-ring:focus {
+
   outline: none;
+
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+
 }
+
+
 
 /* Section transition animations */
+
 .section-transition {
+
   position: relative;
+
   overflow: hidden;
+
 }
+
+
 
 .section-slide-up-enter {
+
   animation: slideUpEnter 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+
 }
+
+
 
 .section-slide-up-exit {
+
   animation: slideUpExit 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+
   position: absolute;
+
   top: 0;
+
   left: 0;
+
   right: 0;
+
   z-index: 10;
+
 }
+
+
 
 /* Smooth scrolling enhancement */
+
 html {
+
   scroll-behavior: smooth;
+
 }
+
+
 
 /* Section visibility states */
+
 .section-hidden {
+
   opacity: 0;
+
   transform: translateY(50px);
+
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+
 }
 
+
+
 .section-visible {
+
   opacity: 1;
+
   transform: translateY(0);
+
 }

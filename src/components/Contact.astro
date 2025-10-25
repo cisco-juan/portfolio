@@ -36,7 +36,7 @@ const socialLinks = [
 
     <div class="grid grid-cols-1 gap-12 items-start">
       <!-- Contact Form -->
-      <div class="fade-in-section">
+      <div class="fade-in-section slide-in-from-left">
         <!-- <form id="contact-form" class="space-y-6">
           <div>
             <label for="name" class="block text-sm font-medium text-slate-300 mb-2">
@@ -247,7 +247,7 @@ const socialLinks = [
       });
     }, observerOptions);
 
-    const sections = document.querySelectorAll('.fade-in-section');
+    const sections = document.querySelectorAll('.fade-in-section, .slide-in-from-left, .slide-in-from-right');
     sections.forEach(section => observer.observe(section));
 
     // Contact form handling

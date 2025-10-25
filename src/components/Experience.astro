@@ -117,7 +117,7 @@ const experiences = [
       <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-400 via-purple-400 to-pink-400 hidden md:block"></div>
       
       {experiences.map((exp, index) => (
-        <div class={`relative mb-12 fade-in-section group ${index % 2 === 0 ? 'md:pr-8' : 'md:pl-8 md:ml-8'}`}>
+        <div class={`relative mb-12 fade-in-section group ${index % 2 === 0 ? 'md:pr-8 slide-in-from-left' : 'md:pl-8 md:ml-8 slide-in-from-right'}`}>
           <!-- Timeline dot -->
           <div class="absolute left-2 w-4 h-4 bg-blue-400 rounded-full border-4 border-slate-900 hidden md:block group-hover:bg-purple-400 transition-colors duration-200" style="top: 24px;"></div>
           
@@ -312,7 +312,7 @@ const experiences = [
       });
     }, observerOptions);
 
-    const sections = document.querySelectorAll('.fade-in-section');
+    const sections = document.querySelectorAll('.fade-in-section, .slide-in-from-left, .slide-in-from-right');
     sections.forEach(section => observer.observe(section));
   });
 </script>

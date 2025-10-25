@@ -1,7 +1,7 @@
 ---
 ---
 
-<section id="hero" class="section-transition min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16">
+<section id="hero" class="jarallax section-transition min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 bg-slate-900">
   <div class="max-w-4xl mx-auto text-center">
     <!-- Animated greeting -->
     <p class="text-blue-400 font-medium mb-4 animate-fade-in opacity-0" style="animation-delay: 0.2s;">
@@ -108,3 +108,13 @@
     animation: float 6s ease-in-out infinite;
   }
 </style>
+
+<script>
+  import { jarallax } from "jarallax";
+
+  document.addEventListener("DOMContentLoaded", function () {
+    jarallax(document.querySelectorAll(".jarallax"), {
+      speed: 0.5,
+    });
+  });
+</script>

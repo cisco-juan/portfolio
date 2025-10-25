@@ -29,7 +29,7 @@ const skills = [
     
     <div class="grid lg:grid-cols-2 gap-12 items-center">
       <!-- Text Content -->
-      <div class="space-y-6 fade-in-section">
+      <div class="space-y-6 fade-in-section slide-in-from-left">
         <p class="text-lg text-slate-300 leading-relaxed">
           Soy un desarrollador full stack apasionado por crear soluciones digitales 
           innovadoras que combinan funcionalidad excepcional con diseño elegante. 
@@ -63,7 +63,7 @@ const skills = [
       </div>
       
       <!-- Image/Visual Element -->
-      <div class="fade-in-section">
+      <div class="fade-in-section slide-in-from-right">
         <div class="relative">
           <!-- Background decoration -->
           <div class="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-2xl transform rotate-3"></div>
@@ -139,7 +139,7 @@ const skills = [
       });
     }, observerOptions);
 
-    const sections = document.querySelectorAll('.fade-in-section');
+    const sections = document.querySelectorAll('.fade-in-section, .slide-in-from-left, .slide-in-from-right');
     sections.forEach(section => observer.observe(section));
   });
 </script>
